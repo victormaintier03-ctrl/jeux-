@@ -25,9 +25,15 @@ fond_menu = pygame.image.load("assets/bgLevelSelect.jpg").convert()
 fond_jeu = pygame.image.load("assets/backgroundPlayBoard.png").convert()
 ecran = "menu"  # Peut valoir "menu" ou "jeu"
 
-# Toutes les molécules utilisées dans le niveau.
-# Les positions sont volontairement différentes pour éviter que les images
-# se superposent au lancement du jeu.
+class UI : 
+     def __init__(self, nom, image_path, x, y):
+            self.nom = nom                 
+            self.image = pygame.image.load(image_path).convert_alpha()  
+            self.rect = self.image.get_rect(topleft=(x, y))             
+     def afficher(self, fenetre):
+        fenetre.blit(self.image, self.rect)    
+
+# liste des molécules, position diff pour eviter superposition 
 molecules = [
     Molecule("virus", "assets/Virus.png", 40, 40),
     Molecule("bleue 2", "assets/Blue_2.png", 220, 80),
@@ -39,6 +45,9 @@ molecules = [
     Molecule("violette 3", "assets/Purple_3.png", 700, 300),
     Molecule("jaune 3", "assets/Yellow_3.png", 40, 400),
 ]
+
+UI = [ 
+     UI("start_button", "assets/StartButton.png", 400, 300),]
 
 en_cours = True
 while en_cours:
@@ -64,7 +73,9 @@ while en_cours:
         
 
 
-
+if ecran == 'menu' : 
+    for UI in UI:
+        UI.afficher(fenetre)
 
 
 
