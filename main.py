@@ -9,7 +9,7 @@ largeur, hauteur = 960, 600
 fenetre = pygame.display.set_mode((largeur, hauteur))
 pygame.display.set_caption("Anti-Virus")
 
-fond = pygame.image.load("bgLevelSelect.jpg").convert()
+fond = pygame.image.load("assets/bgLevelSelect.jpg").convert()
 
 class Molecule:
     
@@ -21,10 +21,10 @@ class Molecule:
     
     def afficher(self, fenetre):
         fenetre.blit(self.image, self.rect)    
-virus = Molecule("virus", "Virus.png", 0, 0)
-piece_verte = Molecule("verte", "Green_2.png", 200, 150)
-fond_menu = pygame.image.load("bgLevelSelect.jpg").convert()
-fond_jeu = pygame.image.load("backgroundPlayBoard.png").convert()
+virus = Molecule("virus", "assets/Virus.png", 0, 0)
+piece_verte = Molecule("verte", "assets/Green_2.png", 200, 150)
+fond_menu = pygame.image.load("assets/bgLevelSelect.jpg").convert()
+fond_jeu = pygame.image.load("assets/backgroundPlayBoard.png").convert()
 ecran = "menu"  # Peut valoir "menu" ou "jeu"
 en_cours = True
 while en_cours:
