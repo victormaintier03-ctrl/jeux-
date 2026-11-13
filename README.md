@@ -1,4 +1,4 @@
-# Jeux NSI
+# Jeu NSI
 
 Ce fichier explique comment envoyer les modifications du projet vers GitHub.
 
