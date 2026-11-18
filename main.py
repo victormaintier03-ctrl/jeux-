@@ -44,7 +44,7 @@ class Molecule:
 # Chargement des deux arrière-plans avec des chemins indépendants du dossier
 # depuis lequel le programme a été lancé.
 fond_menu = pygame.image.load(chemin_asset("bgLevelSelect.jpg")).convert()
-fond_jeu = pygame.image.load(chemin_asset("backgroundPlayBoard.png")).convert()
+fond_jeu = pygame.image.load(chemin_asset("download.jpg")).convert()
 ecran = "menu"  # Peut valoir "menu" ou "jeu"
 
 class Bouton:
@@ -73,7 +73,13 @@ molecules = [
 boutons = [
     Bouton("start_button", chemin_asset("Startbutton.png"), 400, 300),
 ]
-
+# Bouton pour revenir au menu depuis l'écran de jeu
+bouton_retour = Bouton("retour", chemin_asset("Startbutton.png"), 20, 20) 
+# (Tu peux adapter les coordonnées 20, 20 et la taille si besoin)
+# Variables pour la gestion du déplacement
+piece_selectionnee = None
+decal_x = 0
+decal_y = 0
 en_cours = True
 while en_cours:
     
@@ -84,7 +90,48 @@ while en_cours:
             for bouton in boutons:
                 if bouton.rect.collidepoint(event.pos):
                     ecran = "jeu"
+        
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        if ecran == "menu":
+            for bouton in boutons:
+                if bouton.rect.collidepoint(event.pos):
+                    ecran = "jeu"
+        elif ecran == "jeu":
+                # On vérifie d'abord si on clique sur le bouton retour
+                if bouton_retour.rect.collidepoint(event.pos):
+                    ecran = "menu"
+                else:
+                    # Sinon, on vérifie si on attrape une molécule
+                    for molecule in reversed(molecules):
+                        if molecule.rect.collidepoint(event.pos):
+                            piece_selectionnee = molecule
+                            decal_x = molecule.rect.x - event.pos[0]
+                            decal_y = molecule.rect.y - event.pos[1]
+                            break
 
+    if event.type == pygame.MOUSEMOTION and ecran == "jeu":
+        if piece_selectionnee is not None:
+            piece_selectionnee.rect.x = event.pos[0] + decal_x
+            piece_selectionnee.rect.y = event.pos[1] + decal_y
+
+    if event.type == pygame.MOUSEBUTTONUP and ecran == "jeu":
+            if piece_selectionnee is not None:
+                # Définis ici la taille d'une case de ta grille (en pixels) 
+                # et l'origine (le coin haut-gauche de la grille sur ton image)
+                taille_case = 60  # À ajuster si tes cases sont un peu plus grandes ou plus petites
+                origine_x = 150   # Coordonnée X du début de la grille sur l'image (à ajuster)
+                origine_y = 100   # Coordonnée Y du début de la grille sur l'image (à ajuster)
+
+                # On calcule la colonne et la ligne la plus proche
+                colonne = round((piece_selectionnee.rect.x - origine_x) / taille_case)
+                ligne = round((piece_selectionnee.rect.y - origine_y) / taille_case)
+
+                # On replace la pièce exactement sur la case calculée
+                piece_selectionnee.rect.x = origine_x + (colonne * taille_case)
+                piece_selectionnee.rect.y = origine_y + (ligne * taille_case)
+
+                # On libère la pièce
+                piece_selectionnee = None
     if ecran == "menu":
         fenetre.blit(fond_menu, (0, 0))
 
@@ -95,6 +142,9 @@ while en_cours:
         fenetre.blit(fond_jeu, (0, 0))
         for molecule in molecules:
             molecule.afficher(fenetre)
+        
+        # --- C'est ici qu'il faut placer l'étape 3 ---
+        bouton_retour.afficher(fenetre)
 
     pygame.display.flip()
 
