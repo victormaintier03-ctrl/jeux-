@@ -147,6 +147,7 @@ while en_cours:
         bouton_retour.afficher(fenetre)
 
     pygame.display.flip()
-
+# ntm sale fdp
 pygame.quit()
 sys.exit()
+print("hippolyte est gay")
