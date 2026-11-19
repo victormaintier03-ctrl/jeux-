@@ -71,7 +71,7 @@ molecules = [
 ]
 
 boutons = [
-    Bouton("start_button", chemin_asset("Startbutton.png"), 400, 300),
+    Bouton("start_button", chemin_asset("Startbutton.png"), 490, 300),
 ]
 # Bouton pour revenir au menu depuis l'écran de jeu
 bouton_retour = Bouton("retour", chemin_asset("Startbutton.png"), 20, 20) 
@@ -147,7 +147,6 @@ while en_cours:
         bouton_retour.afficher(fenetre)
 
     pygame.display.flip()
-# ntm sale fdp
+
 pygame.quit()
 sys.exit()
-print("hippolyte est gay")
