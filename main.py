@@ -151,3 +151,5 @@ while en_cours:
 
 pygame.quit()
 sys.exit()
+
+print("je suis homosexuel")
